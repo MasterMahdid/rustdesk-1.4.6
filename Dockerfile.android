@@ -7,7 +7,7 @@ ENV ANDROID_NDK_HOME=/opt/android-sdk/ndk/25.2.9519653
 ENV ANDROID_NDK=/opt/android-sdk/ndk/25.2.9519653
 ENV VCPKG_ROOT=/opt/vcpkg
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH=/root/.cargo/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=/opt/flutter/3.24.5/bin:/root/.cargo/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
@@ -72,9 +72,8 @@ RUN /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_SD
     "cmdline-tools;latest" \
     "ndk;25.2.9519653"
 
-RUN git clone --depth 1 --branch 3.22.3 https://github.com/flutter/flutter.git /opt/flutter/3.22.3
 RUN git clone --depth 1 --branch 3.24.5 https://github.com/flutter/flutter.git /opt/flutter/3.24.5
-RUN /opt/flutter/3.22.3/bin/flutter doctor -v || true
+RUN chmod +x /opt/flutter/3.24.5/bin/flutter /opt/flutter/3.24.5/bin/cache/dart-sdk/bin/dart || true
 RUN /opt/flutter/3.24.5/bin/flutter doctor -v || true
 
 RUN git clone --depth 1 https://github.com/microsoft/vcpkg.git /opt/vcpkg
@@ -88,7 +87,7 @@ RUN chmod +x /workspace/flutter/*.sh
 RUN set -e; \
     cd /workspace/flutter; \
     sed -i -e 's/extended_text: 14.0.0/extended_text: 13.0.0/g' pubspec.yaml || true; \
-    /opt/flutter/3.22.3/bin/flutter pub get; \
+    /opt/flutter/3.24.5/bin/flutter pub get; \
     /root/.cargo/bin/cargo install cargo-expand --version 1.0.95 --locked; \
     /root/.cargo/bin/cargo install flutter_rust_bridge_codegen --version 1.80.1 --features "uuid" --locked; \
     /root/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./../src/flutter_ffi.rs --dart-output ./lib/generated_bridge.dart --c-output ./macos/Runner/bridge_generated.h; \
