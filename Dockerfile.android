@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxdo-dev \
     libxfixes-dev \
     llvm-dev \
+    make \
     nasm \
     ninja-build \
     openjdk-17-jdk-headless \
