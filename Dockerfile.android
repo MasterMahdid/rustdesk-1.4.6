@@ -104,7 +104,7 @@ RUN set -e; \
     export ANDROID_NDK_HOME=${ANDROID_NDK_HOME}; \
     export ANDROID_NDK=${ANDROID_NDK_HOME}; \
     export VCPKG_ROOT=${VCPKG_ROOT}; \
-    for ABI in arm64-v8a armeabi-v7a x86_64; do \
+    for ABI in armeabi-v7a; do \
       ./flutter/build_android_deps.sh ${ABI}; \
     done
 
@@ -113,17 +113,11 @@ RUN set -e; \
     export ANDROID_NDK_HOME=${ANDROID_NDK_HOME}; \
     export ANDROID_NDK_ROOT=${ANDROID_NDK_HOME}; \
     export ANDROID_NDK=${ANDROID_NDK_HOME}; \
-    /root/.cargo/bin/rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-android; \
+    /root/.cargo/bin/rustup target add armv7-linux-androideabi; \
     /root/.cargo/bin/cargo install cargo-ndk --version 3.1.2 --locked; \
-    ./flutter/ndk_arm64.sh; \
-    mkdir -p ./flutter/android/app/src/main/jniLibs/arm64-v8a; \
-    cp ./target/aarch64-linux-android/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/arm64-v8a/librustdesk.so; \
     ./flutter/ndk_arm.sh; \
     mkdir -p ./flutter/android/app/src/main/jniLibs/armeabi-v7a; \
-    cp ./target/armv7-linux-androideabi/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/armeabi-v7a/librustdesk.so; \
-    ./flutter/ndk_x64.sh; \
-    mkdir -p ./flutter/android/app/src/main/jniLibs/x86_64; \
-    cp ./target/x86_64-linux-android/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/x86_64/librustdesk.so
+    cp ./target/armv7-linux-androideabi/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/armeabi-v7a/librustdesk.so
 
 RUN set -e; \
     cd /workspace; \
@@ -134,11 +128,9 @@ RUN set -e; \
     cd /workspace/flutter; \
     sed -i "s/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g" android/gradle.properties; \
     sed -i "s/signingConfigs.release/signingConfigs.debug/g" android/app/build.gradle; \
-    mkdir -p android/app/src/main/jniLibs/arm64-v8a android/app/src/main/jniLibs/armeabi-v7a android/app/src/main/jniLibs/x86_64; \
-    cp ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so android/app/src/main/jniLibs/arm64-v8a/; \
+    mkdir -p android/app/src/main/jniLibs/armeabi-v7a; \
     cp ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/arm-linux-androideabi/libc++_shared.so android/app/src/main/jniLibs/armeabi-v7a/; \
-    cp ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_shared.so android/app/src/main/jniLibs/x86_64/; \
-    /opt/flutter/3.24.5/bin/flutter build apk --release --target-platform android-arm64,android-arm,android-x64; \
-    mv build/app/outputs/flutter-apk/app-release.apk /workspace/rustdesk-1.4.6-universal.apk
+    /opt/flutter/3.24.5/bin/flutter build apk --release --target-platform android-arm; \
+    mv build/app/outputs/flutter-apk/app-release.apk /workspace/rustdesk-1.4.6-armeabi-v7a.apk
 
 CMD ["/bin/bash"]
