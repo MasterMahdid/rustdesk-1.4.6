@@ -52,6 +52,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lib32gcc-s1 \
     lib32ncurses6 \
     lib32z1 \
+    autoconf \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
