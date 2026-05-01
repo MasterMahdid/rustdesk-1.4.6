@@ -8,6 +8,7 @@ ENV ANDROID_NDK=/opt/android-sdk/ndk/25.2.9519653
 ENV VCPKG_ROOT=/opt/vcpkg
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=/opt/flutter/3.24.5/bin:/root/.cargo/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV OPENSSL_DIR=/usr
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
