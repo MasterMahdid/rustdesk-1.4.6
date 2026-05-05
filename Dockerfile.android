@@ -13,6 +13,8 @@ ENV OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu
 ENV OPENSSL_INCLUDE_DIR=/usr/include
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
 ENV PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
+ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
+ENV CARGO_NET_RETRY=5
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
