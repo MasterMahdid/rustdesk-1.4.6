@@ -106,38 +106,38 @@ RUN set -e; \
     /root/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./../src/flutter_ffi.rs --dart-output ./lib/generated_bridge.dart --c-output ./macos/Runner/bridge_generated.h; \
     cp ./macos/Runner/bridge_generated.h ./ios/Runner/bridge_generated.h
 
-RUN set -e; \
-    cd /workspace; \
-    export ANDROID_NDK_HOME=${ANDROID_NDK_HOME}; \
-    export ANDROID_NDK=${ANDROID_NDK_HOME}; \
-    export VCPKG_ROOT=${VCPKG_ROOT}; \
-    for ABI in armeabi-v7a; do \
-      ./flutter/build_android_deps.sh ${ABI}; \
-    done
-
-RUN set -e; \
-    cd /workspace; \
-    export ANDROID_NDK_HOME=${ANDROID_NDK_HOME}; \
-    export ANDROID_NDK_ROOT=${ANDROID_NDK_HOME}; \
-    export ANDROID_NDK=${ANDROID_NDK_HOME}; \
-    /root/.cargo/bin/rustup target add armv7-linux-androideabi; \
-    /root/.cargo/bin/cargo install cargo-ndk --version 3.1.2 --locked; \
-    ./flutter/ndk_arm.sh; \
-    mkdir -p ./flutter/android/app/src/main/jniLibs/armeabi-v7a; \
-    cp ./target/armv7-linux-androideabi/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/armeabi-v7a/librustdesk.so
-
-RUN set -e; \
-    cd /workspace; \
-    if [ -f /workspace/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff ]; then \
-      cd /opt/flutter/3.24.5 && git apply /workspace/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff; \
-      cd /workspace; \
-    fi; \
-    cd /workspace/flutter; \
-    sed -i "s/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g" android/gradle.properties; \
-    sed -i "s/signingConfigs.release/signingConfigs.debug/g" android/app/build.gradle; \
-    mkdir -p android/app/src/main/jniLibs/armeabi-v7a; \
-    cp ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/arm-linux-androideabi/libc++_shared.so android/app/src/main/jniLibs/armeabi-v7a/; \
-    /opt/flutter/3.24.5/bin/flutter build apk --release --target-platform android-arm; \
-    mv build/app/outputs/flutter-apk/app-release.apk /workspace/rustdesk-1.4.6-armeabi-v7a.apk
+#RUN set -e; \
+#    cd /workspace; \
+#    export ANDROID_NDK_HOME=${ANDROID_NDK_HOME}; \
+#    export ANDROID_NDK=${ANDROID_NDK_HOME}; \
+#    export VCPKG_ROOT=${VCPKG_ROOT}; \
+#    for ABI in armeabi-v7a; do \
+#      ./flutter/build_android_deps.sh ${ABI}; \
+#    done
+#
+#RUN set -e; \
+#    cd /workspace; \
+#    export ANDROID_NDK_HOME=${ANDROID_NDK_HOME}; \
+#    export ANDROID_NDK_ROOT=${ANDROID_NDK_HOME}; \
+#    export ANDROID_NDK=${ANDROID_NDK_HOME}; \
+#    /root/.cargo/bin/rustup target add armv7-linux-androideabi; \
+#    /root/.cargo/bin/cargo install cargo-ndk --version 3.1.2 --locked; \
+#    ./flutter/ndk_arm.sh; \
+#    mkdir -p ./flutter/android/app/src/main/jniLibs/armeabi-v7a; \
+#    cp ./target/armv7-linux-androideabi/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/armeabi-v7a/librustdesk.so
+#
+#RUN set -e; \
+#    cd /workspace; \
+#    if [ -f /workspace/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff ]; then \
+#      cd /opt/flutter/3.24.5 && git apply /workspace/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff; \
+#      cd /workspace; \
+#    fi; \
+#    cd /workspace/flutter; \
+#    sed -i "s/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g" android/gradle.properties; \
+#    sed -i "s/signingConfigs.release/signingConfigs.debug/g" android/app/build.gradle; \
+#    mkdir -p android/app/src/main/jniLibs/armeabi-v7a; \
+#    cp ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/arm-linux-androideabi/libc++_shared.so android/app/src/main/jniLibs/armeabi-v7a/; \
+#    /opt/flutter/3.24.5/bin/flutter build apk --release --target-platform android-arm; \
+#    mv build/app/outputs/flutter-apk/app-release.apk /workspace/rustdesk-1.4.6-armeabi-v7a.apk
 
 CMD ["/bin/bash"]
