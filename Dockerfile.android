@@ -97,6 +97,8 @@ ENV PATH="${VCPKG_ROOT}:${PATH}"
 # -------------------------
 #Install vcpkg dependencies
 # -------------------------
+
+RUN chmod +x ./flutter/build_android_deps.sh
 RUN export ANDROID_TARGET=armeabi-v7a \
     && ./flutter/build_android_deps.sh ${ANDROID_TARGET} 
 
