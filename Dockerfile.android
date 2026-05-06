@@ -16,7 +16,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ARMV7_VCPKG_COMMIT_ID=6f29f12e82a8293156836ad81cc9bf5af41fe836 \
     VERSION=1.4.6 \
     NDK_VERSION=r27c \
-    ANDROID_SIGNING_KEY=""
 
 ENV PATH=/root/.cargo/bin:/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$PATH
 
