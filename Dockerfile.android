@@ -52,6 +52,7 @@ RUN apt-get update && apt-get install -y \
     ninja-build \
     openjdk-17-jdk-headless \
     pkg-config \
+    libssl-dev \
     tree \
     wget \
     unzip \
@@ -121,6 +122,6 @@ ENV CC_armv7_linux_androideabi=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-
 ENV AR_armv7_linux_androideabi=llvm-ar
 ENV CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=$CC_armv7_linux_androideabi
 
-#RUN chmod +x ./flutter/ndk_arm.sh
-#RUN ./flutter/ndk_arm.sh
+RUN chmod +x ./flutter/ndk_arm.sh
+RUN ./flutter/ndk_arm.sh
 #CMD ["/bin/bash"]
