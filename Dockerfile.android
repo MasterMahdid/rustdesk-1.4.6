@@ -98,8 +98,8 @@ ENV PATH="${VCPKG_ROOT}:${PATH}"
 # -------------------------
 #Install vcpkg dependencies
 # -------------------------
-RUN export ANDROID_TARGET=armeabi-v7a \
-    && ./flutter/build_android_deps.sh ${ANDROID_TARGET} 
+#RUN export ANDROID_TARGET=armeabi-v7a \
+#    && ./flutter/build_android_deps.sh ${ANDROID_TARGET} 
 
 # # -------------------------
 # # Install Rust
