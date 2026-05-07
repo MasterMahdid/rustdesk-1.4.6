@@ -112,7 +112,7 @@ class _FileManagerPageState extends State<FileManagerPage> {
         return false;
       },
       child: Scaffold(
-        // backgroundColor: MyTheme.grayBg,
+        backgroundColor: MyTheme.grayBg,
         appBar: AppBar(
           leading: Row(children: [
             IconButton(
