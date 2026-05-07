@@ -4203,7 +4203,7 @@ class RustdeskImpl implements Rustdesk {
       argValues: [],
       hint: hint,
     ));*/
-    return "KariyaDesk"
+    return "KariyaDesk";
   }
 
   FlutterRustBridgeTaskConstMeta get kMainGetAppNameSyncConstMeta =>
