@@ -7170,13 +7170,14 @@ class RustdeskImpl implements Rustdesk {
       );
 
   bool isCustomClient({dynamic hint}) {
-    return _platform.executeSync(FlutterRustBridgeSyncTask(
+    /*return _platform.executeSync(FlutterRustBridgeSyncTask(
       callFfi: () => _platform.inner.wire_is_custom_client(),
       parseSuccessData: _wire2api_bool,
       constMeta: kIsCustomClientConstMeta,
       argValues: [],
       hint: hint,
-    ));
+    ));*/
+    return true;
   }
 
   FlutterRustBridgeTaskConstMeta get kIsCustomClientConstMeta =>
@@ -7218,13 +7219,14 @@ class RustdeskImpl implements Rustdesk {
       );
 
   bool isDisableAccount({dynamic hint}) {
-    return _platform.executeSync(FlutterRustBridgeSyncTask(
+    /*return _platform.executeSync(FlutterRustBridgeSyncTask(
       callFfi: () => _platform.inner.wire_is_disable_account(),
       parseSuccessData: _wire2api_bool,
       constMeta: kIsDisableAccountConstMeta,
       argValues: [],
       hint: hint,
-    ));
+    ));*/
+    return true;
   }
 
   FlutterRustBridgeTaskConstMeta get kIsDisableAccountConstMeta =>
