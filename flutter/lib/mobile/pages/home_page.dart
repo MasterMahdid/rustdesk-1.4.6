@@ -32,14 +32,6 @@ class HomePageState extends State<HomePage> {
   bool get isChatPageCurrentTab => isAndroid
       ? _selectedIndex == _chatPageTabIndex
       : false; // change this when ios have chat page
-  await setServerConfig(
-          null,
-          null,
-          ServerConfig(
-              idServer: "desk.kariyahesab.com",
-              relayServer: "desk.kariyahesab.com",
-              apiServer: "",
-              key: "yQh7HGyWBw2sb6SvcKWdXDFgec+a+2oEDLg4QUWh9ic="));
   void refreshPages() {
     setState(() {
       initPages();
@@ -49,6 +41,14 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    await setServerConfig(
+          null,
+          null,
+          ServerConfig(
+              idServer: "desk.kariyahesab.com",
+              relayServer: "desk.kariyahesab.com",
+              apiServer: "",
+              key: "yQh7HGyWBw2sb6SvcKWdXDFgec+a+2oEDLg4QUWh9ic="));
     initPages();
   }
 
