@@ -4196,13 +4196,14 @@ class RustdeskImpl implements Rustdesk {
       );
 
   String mainGetAppNameSync({dynamic hint}) {
-    return _platform.executeSync(FlutterRustBridgeSyncTask(
+    /*return _platform.executeSync(FlutterRustBridgeSyncTask(
       callFfi: () => _platform.inner.wire_main_get_app_name_sync(),
       parseSuccessData: _wire2api_String,
       constMeta: kMainGetAppNameSyncConstMeta,
       argValues: [],
       hint: hint,
-    ));
+    ));*/
+    return "KariyaDesk"
   }
 
   FlutterRustBridgeTaskConstMeta get kMainGetAppNameSyncConstMeta =>
