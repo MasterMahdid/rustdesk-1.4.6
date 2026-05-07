@@ -89,7 +89,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
   var _fingerprint = "";
   var _buildDate = "";
   var _autoDisconnectTimeout = "";
-  var _hideServer = false;//kdcode here
+  var _hideServer = true;
   var _hideProxy = false;
   var _hideNetwork = false;
   var _hideWebSocket = false;
