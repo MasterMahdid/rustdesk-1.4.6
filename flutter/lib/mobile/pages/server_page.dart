@@ -310,12 +310,9 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
   @override
   Widget build(BuildContext context) {
     final isButtonLocked = _countdown > 0;
-
     return AlertDialog(
-  content: ClipRRect(
-    borderRadius: BorderRadius.circular(20.0),
-    child: SingleChildScrollView(
-      child: Container(
+      contentPadding: EdgeInsets.zero,
+      content: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -326,148 +323,164 @@ class ScamWarningDialogState extends State<ScamWarningDialog> {
             ],
           ),
         ),
-        padding: EdgeInsets.all(25.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.warning_amber_sharp,
-                  color: Colors.white,
+        child: SizedBox(
+          width: double.maxFinite,
+          height: 500, // important for controlled layout
+          child: Column(
+            children: [
+
+              // ================= HEADER (fixed) =================
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.warning_amber_sharp,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      "هشدار امنیتی",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 10),
-                Text(
-                  "هشدار امنیتی",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+              ),
+
+              Center(
+                child: Image.asset(
+                  'assets/scam.png',
+                  width: 140,
+                ),
+              ),
+
+              SizedBox(height: 10),
+
+              // ================= SCROLLABLE BODY =================
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        "کاربر گرامی، شما در حال فعال‌سازی قابلیت اشتراک‌گذاری صفحه نمایش هستید. با فعال شدن این قابلیت، شخص مقابل قادر خواهد بود محتوای صفحه نمایش دستگاه شما را مشاهده کند.\n\n"
+                        "لطفاً این امکان را تنها در صورتی فعال کنید که از هویت و قابل اعتماد بودن طرف مقابل اطمینان کامل دارید. در صورتی که فردی ناشناس از شما درخواست اشتراک‌گذاری صفحه کرده است، احتمال سوءاستفاده یا کلاهبرداری وجود دارد.\n\n"
+                        "توجه داشته باشید کاریا دسک (کاریا حساب) هیچ‌گاه از کاربران درخواست نمی‌کند بدون اطلاع و اطمینان کامل اقدام به اشتراک‌گذاری صفحه نمایش خود کنند.\n\n"
+                        "پیش از ادامه، از موارد زیر اطمینان حاصل کنید:\n\n"
+                        "• هویت شخص مقابل برای شما مشخص و قابل اعتماد است.\n"
+                        "• از دلیل اشتراک‌گذاری صفحه آگاه هستید.\n"
+                        "• اطلاعات حساس مانند رمز عبور، کدهای تأیید، اطلاعات بانکی یا پیام‌های خصوصی در صفحه نمایش داده نمی‌شود.\n\n"
+                        "در صورت وجود هرگونه تردید، از فعال‌سازی این قابلیت خودداری نمایید.",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.0,
+                          height: 1.5,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-
-            SizedBox(height: 20),
-
-            Center(
-              child: Image.asset(
-                'assets/scam.png',
-                width: 180,
               ),
-            ),
 
-            SizedBox(height: 18),
+              // ================= BOTTOM CONTROLS (fixed) =================
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
 
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: Text(
-                "کاربر گرامی، شما در حال فعال‌سازی قابلیت اشتراک‌گذاری صفحه نمایش هستید. با فعال شدن این قابلیت، شخص مقابل قادر خواهد بود محتوای صفحه نمایش دستگاه شما را مشاهده کند.\n\n"
-                "لطفاً این امکان را تنها در صورتی فعال کنید که از هویت و قابل اعتماد بودن طرف مقابل اطمینان کامل دارید. در صورتی که فردی ناشناس از شما درخواست اشتراک‌گذاری صفحه کرده است، احتمال سوءاستفاده یا کلاهبرداری وجود دارد.\n\n"
-                "توجه داشته باشید کاریا دسک (کاریا حساب) هیچ‌گاه از کاربران درخواست نمی‌کند بدون اطلاع و اطمینان کامل اقدام به اشتراک‌گذاری صفحه نمایش خود کنند.\n\n"
-                "پیش از ادامه، از موارد زیر اطمینان حاصل کنید:\n\n"
-                "• هویت شخص مقابل برای شما مشخص و قابل اعتماد است.\n"
-                "• از دلیل اشتراک‌گذاری صفحه آگاه هستید.\n"
-                "• اطلاعات حساس مانند رمز عبور، کدهای تأیید، اطلاعات بانکی یا پیام‌های خصوصی در صفحه نمایش داده نمی‌شود.\n\n"
-                "در صورت وجود هرگونه تردید، از فعال‌سازی این قابلیت خودداری نمایید.",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.right,
-              ),
-            ),
-
-            Row(
-              children: <Widget>[
-                Checkbox(
-                  value: show_warning,
-                  onChanged: (value) {
-                    setState(() {
-                      show_warning = value!;
-                    });
-                  },
-                ),
-                Text(
-                  "دیگر نمایش داده نشود",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ],
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  constraints: BoxConstraints(maxWidth: 150),
-                  child: ElevatedButton(
-                    onPressed: isButtonLocked
-                        ? null
-                        : () {
-                            Navigator.of(context).pop();
-                            _serverModel.toggleService();
-                            if (show_warning) {
-                              bind.mainSetLocalOption(
-                                key: "show-scam-warning",
-                                value: "N",
-                              );
-                            }
+                    Row(
+                      children: <Widget>[
+                        Checkbox(
+                          value: show_warning,
+                          onChanged: (value) {
+                            setState(() {
+                              show_warning = value!;
+                            });
                           },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
+                        ),
+                        Text(
+                          "دیگر نمایش داده نشود",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      isButtonLocked
-                          ? "موافقم (${_countdown}s)"
-                          : "موافقم",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13.0,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
 
-                SizedBox(width: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
 
-                Container(
-                  constraints: BoxConstraints(maxWidth: 150),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 150),
+                          child: ElevatedButton(
+                            onPressed: isButtonLocked
+                                ? null
+                                : () {
+                                    Navigator.of(context).pop();
+                                    _serverModel.toggleService();
+                                    if (show_warning) {
+                                      bind.mainSetLocalOption(
+                                        key: "show-scam-warning",
+                                        value: "N",
+                                      );
+                                    }
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                            ),
+                            child: Text(
+                              isButtonLocked
+                                  ? "موافقم (${_countdown}s)"
+                                  : "موافقم",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 15),
+
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 150),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                            ),
+                            child: Text(
+                              "انصراف",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      "انصراف",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13.0,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  ),
-  contentPadding: EdgeInsets.all(0.0),
-);
+    );
+    
   }
 }
 
