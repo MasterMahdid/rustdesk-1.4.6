@@ -82,6 +82,7 @@ class HomePageState extends State<HomePage> {
         child: Scaffold(
           // backgroundColor: MyTheme.grayBg,
           appBar: AppBar(
+            backgroundColor: Color(0xFF124497), // fixed color
             centerTitle: true,
             title: appTitle(),
             actions: _pages.elementAt(_selectedIndex).appBarActions,
