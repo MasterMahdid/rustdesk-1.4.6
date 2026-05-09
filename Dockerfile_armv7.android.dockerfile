@@ -1,0 +1,130 @@
+# syntax=docker/dockerfile:1
+FROM ubuntu:24.04
+
+# -------------------------
+# ARGs / ENV
+# -------------------------
+ENV DEBIAN_FRONTEND=noninteractive \
+    RUST_VERSION=1.75 \
+    MAC_RUST_VERSION=1.81 \
+    CARGO_NDK_VERSION=3.1.2 \
+    LLVM_VERSION=15.0.6 \
+    FLUTTER_VERSION=3.24.5 \
+    ANDROID_FLUTTER_VERSION=3.24.5 \
+    FLUTTER_ELINUX_VERSION=3.16.9 \
+    VCPKG_COMMIT_ID=120deac3062162151622ca4860575a33844ba10b \
+    ARMV7_VCPKG_COMMIT_ID=6f29f12e82a8293156836ad81cc9bf5af41fe836 \
+    VERSION=1.4.6 \
+    NDK_VERSION=r27c 
+
+ENV PATH=/root/.cargo/bin:/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$PATH
+
+WORKDIR /workspace
+# -------------------------
+# Install deps
+# -------------------------
+RUN apt-get update && apt-get install -y \
+     clang \
+    cmake \
+    curl \
+    gcc-multilib \
+    git \
+    g++ \
+    g++-multilib \
+    libayatana-appindicator3-dev \
+    libasound2-dev \
+    libc6-dev \
+    libclang-dev \
+    libunwind-dev \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    libgtk-3-dev \
+    libpam0g-dev \
+    libpulse-dev \
+    libva-dev \
+    libxcb-randr0-dev \
+    libxcb-shape0-dev \
+    libxcb-xfixes0-dev \
+    libxdo-dev \
+    libxfixes-dev \
+    llvm-dev \
+    nasm \
+    ninja-build \
+    openjdk-17-jdk-headless \
+    pkg-config \
+    libssl-dev \
+    tree \
+    wget \
+    unzip \
+    zip \
+    tar \
+    && rm -rf /var/lib/apt/lists/*
+
+# -------------------------
+# Copy project
+# -------------------------
+COPY . /workspace
+
+# -------------------------
+# Install Flutter
+# -------------------------
+RUN git clone https://github.com/flutter/flutter.git /opt/flutter \
+    && cd /opt/flutter \
+    && git checkout $FLUTTER_VERSION
+
+RUN cd flutter && \
+    git apply /workspace/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff
+# -------------------------
+# Install Android NDK
+# -------------------------
+RUN mkdir -p /opt/android-sdk && cd /opt/android-sdk \
+    && wget https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux.zip \
+    && unzip android-ndk-${NDK_VERSION}-linux.zip \
+    && rm android-ndk-${NDK_VERSION}-linux.zip
+
+ENV ANDROID_NDK_HOME=/opt/android-sdk/android-ndk-${NDK_VERSION}
+ENV ANDROID_NDK_ROOT=/opt/android-sdk/android-ndk-${NDK_VERSION}
+ENV PATH="${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin:${PATH}"
+# -------------------------
+# Install vcpkg
+# -------------------------
+RUN git clone https://github.com/microsoft/vcpkg.git /opt/vcpkg \
+    && cd /opt/vcpkg \
+    && git checkout ${VCPKG_COMMIT_ID} \
+    && ./bootstrap-vcpkg.sh
+
+ENV VCPKG_ROOT=/opt/vcpkg
+ENV PATH="${VCPKG_ROOT}:${PATH}"
+# -------------------------
+#Install vcpkg dependencies
+# -------------------------
+
+RUN chmod +x ./flutter/build_android_deps.sh
+RUN export ANDROID_TARGET=armeabi-v7a \
+    && ./flutter/build_android_deps.sh ${ANDROID_TARGET} 
+
+
+# ---- Rust install ----
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    --default-toolchain ${RUST_VERSION}
+
+# Add cargo to PATH for ALL future RUN layers
+ENV CARGO_HOME=/root/.cargo
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# ---- Rust targets + tools ----
+RUN rustup target add armv7-linux-androideabi
+
+
+RUN cargo install cargo-ndk --version ${CARGO_NDK_VERSION} --locked
+
+ENV API_LEVEL=21
+
+ENV CC_armv7_linux_androideabi=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi${API_LEVEL}-clang
+ENV AR_armv7_linux_androideabi=llvm-ar
+ENV CARGO_TARGET_ARMV7_LINUX_ANDROIDEABI_LINKER=$CC_armv7_linux_androideabi
+
+RUN chmod +x ./flutter/ndk_arm.sh
+RUN ./flutter/ndk_arm.sh
+
+#CMD ["/bin/bash"]
