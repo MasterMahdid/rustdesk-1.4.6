@@ -942,23 +942,42 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             tiles: enhancementsTiles,
           ),
         SettingsSection(
-          title: Text(translate("About")),
-          tiles: [
-            SettingsTile(
-                onPressed: (context) async {
-                  await launchUrl(Uri.parse("http://www.kariyahesab.com/kariyadesk/"));
-                },
-                title: Text(translate("Version: ") + version),
-                value: Padding(
+        title: Text(translate("About")),
+        tiles: [
+          SettingsTile(
+            onPressed: (context) async {
+              await launchUrl(
+                Uri.parse("http://www.kariyahesab.com/kariyadesk/"),
+              );
+            },
+            title: Text(translate("Version: ") + "1.1.2"),
+            value: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Text('kariyahesab.com/kariyadesk',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      )),
+                  child: Text(
+                    'kariyahesab.com/kariyadesk',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 ),
-                leading: Icon(Icons.info))
-          ],
-        ),
+
+                // fixed text below link
+                Text(
+                  'توسعه یافته توسط کاریاحساب',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            leading: Icon(Icons.info),
+          )
+        ],
+      ),
       ],
     );
     return settings;
@@ -995,7 +1014,10 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
 
 void showLanguageSettings(OverlayDialogManager dialogManager) async {
   try {
-    final langs = json.decode(await bind.mainGetLangs()) as List<dynamic>;
+    final allowed = ["fa", "en"];
+    final langs = (json.decode(await bind.mainGetLangs()) as List<dynamic>)
+        .where((item) => allowed.contains(item[0]))
+        .toList();
     var lang = bind.mainGetLocalOption(key: kCommConfKeyLang);
     dialogManager.show((setState, close, context) {
       setLang(v) async {
