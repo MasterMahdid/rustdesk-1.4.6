@@ -83,7 +83,7 @@ class HomePageState extends State<HomePage> {
           // backgroundColor: MyTheme.grayBg,
           appBar: AppBar(
             centerTitle: true,
-            title: appTitle(),
+            title: "کاریادسک",
             actions: _pages.elementAt(_selectedIndex).appBarActions,
           ),
           bottomNavigationBar: BottomNavigationBar(

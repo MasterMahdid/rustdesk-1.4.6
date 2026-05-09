@@ -75,7 +75,7 @@ class DraggableChatWindow extends StatelessWidget {
 
   Widget _buildMobileAppBar(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.primary,
+      color: Color(0xFF124497),
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
