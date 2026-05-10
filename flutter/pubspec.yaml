@@ -173,6 +173,7 @@ flutter:
       fonts:
         - asset: assets/more.ttf
     - family: Yekan
+      fonts:
         - asset: assets/IRANYekanX-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
