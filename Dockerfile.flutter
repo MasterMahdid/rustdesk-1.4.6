@@ -86,5 +86,18 @@ ENV ANDROID_NDK_HOME=/opt/android-sdk/android-ndk-${NDK_VERSION}
 ENV ANDROID_NDK_ROOT=/opt/android-sdk/android-ndk-${NDK_VERSION}
 ENV PATH="${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/bin:${PATH}"
 
+# ---- Rust install ----
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    --default-toolchain ${RUST_VERSION}
+
+# Add cargo to PATH for ALL future RUN layers
+ENV CARGO_HOME=/root/.cargo
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# ---- Rust targets + tools ----
+RUN rustup target add armv7-linux-androideabi
+
+
+RUN cargo install cargo-ndk --version ${CARGO_NDK_VERSION} --locked
 
 #CMD ["/bin/bash"]
