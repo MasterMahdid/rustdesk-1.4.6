@@ -644,7 +644,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
         initialValue: !_floatingWindowDisabled,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(translate('Floating window'),style: TextStyle(fontFamily: 'Yekan')),
-          Text('* ${translate('floating_window_tip'),style: TextStyle(fontFamily: 'Yekan')}',
+          Text('* ${translate('floating_window_tip')}',
               style: Theme.of(context).textTheme.bodySmall),
         ]),
         onToggle: bind.mainIsOptionFixed(key: kOptionDisableFloatingWindow)
@@ -971,7 +971,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey,
-                    ontFamily: 'Yekan'
+                    fontFamily: 'Yekan'
                   ),
                 ),
               ],
