@@ -472,6 +472,7 @@ class MyTheme {
     ],
   );
   static ThemeData darkTheme = ThemeData(
+    fontFamily: 'Yekan',
     useMaterial3: false,
     brightness: Brightness.dark,
     hoverColor: Color.fromARGB(255, 45, 46, 53),

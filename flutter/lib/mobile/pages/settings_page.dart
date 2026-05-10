@@ -709,7 +709,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
               ),
             ],
           ),
-        SettingsSection(title: Text(translate("Settings")), tiles: [
+        SettingsSection(title: Text(translate("Settings"),style: TextStyle(fontFamily: 'Yekan')), tiles: [
           if (!disabledSettings && !_hideNetwork && !_hideServer)
             SettingsTile(
                 title: Text(translate('ID/Relay Server')),
@@ -722,7 +722,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 }),
           if (!_hideNetwork && !_hideProxy)
             SettingsTile(
-                title: Text(translate('Socks5/Http(s) Proxy')),
+                title: Text(translate('Socks5/Http(s) Proxy'),style: TextStyle(fontFamily: 'Yekan')),
                 leading: Icon(Icons.network_ping),
                 onPressed: (context) {
                   changeSocks5Proxy();
