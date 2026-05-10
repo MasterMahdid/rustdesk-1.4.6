@@ -292,7 +292,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
     final enable2fa = bind.mainHasValid2FaSync();
     final List<AbstractSettingsTile> tfaTiles = [
       SettingsTile.switchTile(
-        title: Text(translate('enable-2fa-title')),
+        title: Text(translate('enable-2fa-title'),style: TextStyle(fontFamily: 'Yekan')),
         initialValue: enable2fa,
         onToggle: (v) async {
           update() async {
@@ -311,7 +311,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
       ),
       if (enable2fa)
         SettingsTile.switchTile(
-          title: Text(translate('Telegram bot')),
+          title: Text(translate('Telegram bot'),style: TextStyle(fontFamily: 'Yekan')),
           initialValue: bind.mainHasValidBotSync(),
           onToggle: (v) async {
             update() async {
@@ -333,7 +333,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(translate('Enable trusted devices')),
+              Text(translate('Enable trusted devices'),style: TextStyle(fontFamily: 'Yekan')),
               Text('* ${translate('enable-trusted-devices-tip')}',
                   style: Theme.of(context).textTheme.bodySmall),
             ],
@@ -350,7 +350,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
         ),
       if (enable2fa && _enableTrustedDevices)
         SettingsTile(
-            title: Text(translate('Manage trusted devices')),
+            title: Text(translate('Manage trusted devices'),style: TextStyle(fontFamily: 'Yekan')),
             trailing: Icon(Icons.arrow_forward_ios),
             onPressed: (context) {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -360,7 +360,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
     ];
     final List<AbstractSettingsTile> shareScreenTiles = [
       SettingsTile.switchTile(
-        title: Text(translate('Deny LAN discovery')),
+        title: Text(translate('Deny LAN discovery'),style: TextStyle(fontFamily: 'Yekan')),
         initialValue: _denyLANDiscovery,
         onToggle: isOptionFixed(kOptionEnableLanDiscovery)
             ? null
@@ -377,7 +377,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
       ),
       SettingsTile.switchTile(
         title: Row(children: [
-          Expanded(child: Text(translate('Use IP Whitelisting'))),
+          Expanded(child: Text(translate('Use IP Whitelisting'),style: TextStyle(fontFamily: 'Yekan'))),
           Offstage(
                   offstage: !_onlyWhiteList,
                   child: const Icon(Icons.warning_amber_rounded,
@@ -399,7 +399,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
         },
       ),
       SettingsTile.switchTile(
-        title: Text(translate('Adaptive bitrate')),
+        title: Text(translate('Adaptive bitrate'),style: TextStyle(fontFamily: 'Yekan')),
         initialValue: _enableAbr,
         onToggle: isOptionFixed(kOptionEnableAbr)
             ? null
@@ -412,7 +412,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
               },
       ),
       SettingsTile.switchTile(
-        title: Text(translate('Enable recording session')),
+        title: Text(translate('Enable recording session'),style: TextStyle(fontFamily: 'Yekan')),
         initialValue: _enableRecordSession,
         onToggle: isOptionFixed(kOptionEnableRecordSession)
             ? null
@@ -481,7 +481,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                    Text(translate("auto_disconnect_option_tip")),
+                    Text(translate("auto_disconnect_option_tip"),style: TextStyle(fontFamily: 'Yekan')),
                     Offstage(
                         offstage: !_allowAutoDisconnect,
                         child: Text(
@@ -528,7 +528,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
               title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(translate('Keep RustDesk background service')),
+                    Text(translate('Keep RustDesk background service'),style: TextStyle(fontFamily: 'Yekan')),
                     Text('* ${translate('Ignore Battery Optimizations')}',
                         style: Theme.of(context).textTheme.bodySmall),
                   ]),
@@ -539,9 +539,9 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 } else {
                   final res = await gFFI.dialogManager.show<bool>(
                       (setState, close, context) => CustomAlertDialog(
-                            title: Text(translate("Open System Setting")),
+                            title: Text(translate("Open System Setting"),style: TextStyle(fontFamily: 'Yekan')),
                             content: Text(translate(
-                                "android_open_battery_optimizations_tip")),
+                                "android_open_battery_optimizations_tip"),style: TextStyle(fontFamily: 'Yekan')),
                             actions: [
                               dialogButton("Cancel",
                                   onPressed: () => close(), isOutline: true),
@@ -561,7 +561,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
     enhancementsTiles.add(SettingsTile.switchTile(
         initialValue: _enableStartOnBoot,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(translate('Start on boot')),
+          Text(translate('Start on boot'),style: TextStyle(fontFamily: 'Yekan')),
           Text(
               '* ${translate('Start the screen sharing service on boot, requires special permissions')}',
               style: Theme.of(context).textTheme.bodySmall),
@@ -597,7 +597,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           initialValue: _checkUpdateOnStartup,
           title:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(translate('Check for software update on startup')),
+            Text(translate('Check for software update on startup'),style: TextStyle(fontFamily: 'Yekan')),
           ]),
           onToggle: (bool toValue) async {
             await mainSetLocalBoolOption(kOptionEnableCheckUpdate, toValue);
@@ -611,7 +611,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
       SettingsTile.switchTile(
         initialValue: _showTerminalExtraKeys,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(translate('Show terminal extra keys')),
+          Text(translate('Show terminal extra keys'),style: TextStyle(fontFamily: 'Yekan')),
         ]),
         onToggle: (bool v) async {
           await mainSetLocalBoolOption(kOptionEnableShowTerminalExtraKeys, v);
@@ -643,8 +643,8 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
     enhancementsTiles.add(SettingsTile.switchTile(
         initialValue: !_floatingWindowDisabled,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(translate('Floating window')),
-          Text('* ${translate('floating_window_tip')}',
+          Text(translate('Floating window'),style: TextStyle(fontFamily: 'Yekan')),
+          Text('* ${translate('floating_window_tip'),style: TextStyle(fontFamily: 'Yekan')}',
               style: Theme.of(context).textTheme.bodySmall),
         ]),
         onToggle: bind.mainIsOptionFixed(key: kOptionDisableFloatingWindow)
@@ -682,7 +682,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
         customClientSection,
         if (!bind.isDisableAccount())
           SettingsSection(
-            title: Text(translate('Account')),
+            title: Text(translate('Account'),style: TextStyle(fontFamily: 'Yekan')),
             tiles: [
               SettingsTile(
                 title: Obx(() => Text(gFFI.userModel.userName.value.isEmpty
@@ -729,7 +729,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                 }),
           if (!disabledSettings && !_hideNetwork && !_hideWebSocket)
             SettingsTile.switchTile(
-              title: Text(translate('Use WebSocket')),
+              title: Text(translate('Use WebSocket'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _allowWebSocket,
               onToggle: isOptionFixed(kOptionAllowWebSocket)
                   ? null
@@ -744,7 +744,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             ),
           if (!_isUsingPublicServer)
             SettingsTile.switchTile(
-              title: Text(translate('Allow insecure TLS fallback')),
+              title: Text(translate('Allow insecure TLS fallback'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _allowInsecureTlsFallback,
               onToggle: isOptionFixed(kOptionAllowInsecureTLSFallback)
                   ? null
@@ -760,7 +760,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             ),
           if (isAndroid && !outgoingOnly && !_isUsingPublicServer)
             SettingsTile.switchTile(
-              title: Text(translate('Disable UDP')),
+              title: Text(translate('Disable UDP'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _disableUdp,
               onToggle: isOptionFixed(kOptionDisableUdp)
                   ? null
@@ -776,7 +776,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             ),
           if (!incomingOnly)
             SettingsTile.switchTile(
-              title: Text(translate('Enable UDP hole punching')),
+              title: Text(translate('Enable UDP hole punching'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _enableUdpPunch,
               onToggle: (v) async {
                 await mainSetLocalBoolOption(kOptionEnableUdpPunch, v);
@@ -789,7 +789,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             ),
           if (!incomingOnly)
             SettingsTile.switchTile(
-              title: Text(translate('Enable IPv6 P2P connection')),
+              title: Text(translate('Enable IPv6 P2P connection'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _enableIpv6Punch,
               onToggle: (v) async {
                 await mainSetLocalBoolOption(kOptionEnableIpv6Punch, v);
@@ -801,7 +801,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
               },
             ),
           SettingsTile(
-              title: Text(translate('Language')),
+              title: Text(translate('Language'),style: TextStyle(fontFamily: 'Yekan')),
               leading: Icon(Icons.translate),
               onPressed: (context) {
                 showLanguageSettings(gFFI.dialogManager);
@@ -810,7 +810,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             title: Text(translate(
                 Theme.of(context).brightness == Brightness.light
                     ? 'Light Theme'
-                    : 'Dark Theme')),
+                    : 'Dark Theme'),style: TextStyle(fontFamily: 'Yekan')),
             leading: Icon(Theme.of(context).brightness == Brightness.light
                 ? Icons.dark_mode
                 : Icons.light_mode),
@@ -820,7 +820,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           ),
           if (!bind.isDisableAccount())
             SettingsTile.switchTile(
-              title: Text(translate('note-at-conn-end-tip')),
+              title: Text(translate('note-at-conn-end-tip'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _allowAskForNoteAtEndOfConnection,
               onToggle: (v) async {
                 if (v && !gFFI.userModel.isLogin) {
@@ -839,7 +839,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           if (!incomingOnly)
             SettingsTile.switchTile(
               title:
-                  Text(translate('keep-awake-during-outgoing-sessions-label')),
+                  Text(translate('keep-awake-during-outgoing-sessions-label'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _preventSleepWhileConnected,
               onToggle: (v) async {
                 await mainSetLocalBoolOption(
@@ -851,9 +851,9 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             ),
         ]),
         if (isAndroid)
-          SettingsSection(title: Text(translate('Hardware Codec')), tiles: [
+          SettingsSection(title: Text(translate('Hardware Codec'),style: TextStyle(fontFamily: 'Yekan')), tiles: [
             SettingsTile.switchTile(
-              title: Text(translate('Enable hardware codec')),
+              title: Text(translate('Enable hardware codec'),style: TextStyle(fontFamily: 'Yekan')),
               initialValue: _enableHardwareCodec,
               onToggle: isOptionFixed(kOptionEnableHwcodec)
                   ? null
@@ -869,12 +869,12 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
           ]),
         if (isAndroid)
           SettingsSection(
-            title: Text(translate("Recording")),
+            title: Text(translate("Recording"),style: TextStyle(fontFamily: 'Yekan')),
             tiles: [
               if (!outgoingOnly)
                 SettingsTile.switchTile(
                   title:
-                      Text(translate('Automatically record incoming sessions')),
+                      Text(translate('Automatically record incoming sessions'),style: TextStyle(fontFamily: 'Yekan')),
                   initialValue: _autoRecordIncomingSession,
                   onToggle: isOptionFixed(kOptionAllowAutoRecordIncoming)
                       ? null
@@ -895,7 +895,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
               if (!incomingOnly)
                 SettingsTile.switchTile(
                   title:
-                      Text(translate('Automatically record outgoing sessions')),
+                      Text(translate('Automatically record outgoing sessions'),style: TextStyle(fontFamily: 'Yekan')),
                   initialValue: _autoRecordOutgoingSession,
                   onToggle: isOptionFixed(kOptionAllowAutoRecordOutgoing)
                       ? null
@@ -914,7 +914,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                         },
                 ),
               SettingsTile(
-                title: Text(translate("Directory")),
+                title: Text(translate("Directory"),style: TextStyle(fontFamily: 'Yekan')),
                 description: Text(bind.mainVideoSaveDirectory(root: false)),
               ),
             ],
@@ -923,13 +923,13 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             !disabledSettings &&
             !outgoingOnly &&
             !hideSecuritySettings)
-          SettingsSection(title: Text('2FA'), tiles: tfaTiles),
+          SettingsSection(title: Text('2FA',style: TextStyle(fontFamily: 'Yekan')), tiles: tfaTiles),
         if (isAndroid &&
             !disabledSettings &&
             !outgoingOnly &&
             !hideSecuritySettings)
           SettingsSection(
-            title: Text(translate("Share screen")),
+            title: Text(translate("Share screen"),style: TextStyle(fontFamily: 'Yekan')),
             tiles: shareScreenTiles,
           ),
         if (!bind.isIncomingOnly()) defaultDisplaySection(),
@@ -938,11 +938,11 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
             !outgoingOnly &&
             !hideSecuritySettings)
           SettingsSection(
-            title: Text(translate("Enhancements")),
+            title: Text(translate("Enhancements"),style: TextStyle(fontFamily: 'Yekan')),
             tiles: enhancementsTiles,
           ),
         SettingsSection(
-        title: Text(translate("About")),
+        title: Text(translate("About"),style: TextStyle(fontFamily: 'Yekan')),
         tiles: [
           SettingsTile(
             onPressed: (context) async {
@@ -960,6 +960,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                     'kariyahesab.com/kariyadesk',
                     style: TextStyle(
                       decoration: TextDecoration.underline,
+                      fontFamily: 'Yekan'
                     ),
                   ),
                 ),
@@ -970,6 +971,7 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey,
+                    ontFamily: 'Yekan'
                   ),
                 ),
               ],
@@ -996,10 +998,10 @@ class _SettingsState extends State<SettingsPage> with WidgetsBindingObserver {
 
   defaultDisplaySection() {
     return SettingsSection(
-      title: Text(translate("Display Settings")),
+      title: Text(translate("Display Settings"),style: TextStyle(fontFamily: 'Yekan')),
       tiles: [
         SettingsTile(
-            title: Text(translate('Display Settings')),
+            title: Text(translate('Display Settings'),style: TextStyle(fontFamily: 'Yekan')),
             leading: Icon(Icons.desktop_windows_outlined),
             trailing: Icon(Icons.arrow_forward_ios),
             onPressed: (context) {
@@ -1035,14 +1037,14 @@ void showLanguageSettings(OverlayDialogManager dialogManager) async {
       return CustomAlertDialog(
         content: Column(
           children: [
-                getRadio(Text(translate('Default')), defaultOptionLang, lang,
+                getRadio(Text(translate('Default'),style: TextStyle(fontFamily: 'Yekan')), defaultOptionLang, lang,
                     isOptFixed ? null : setLang),
                 Divider(color: MyTheme.border),
               ] +
               langs.map((e) {
                 final key = e[0] as String;
                 final name = e[1] as String;
-                return getRadio(Text(translate(name)), key, lang,
+                return getRadio(Text(translate(name),style: TextStyle(fontFamily: 'Yekan')), key, lang,
                     isOptFixed ? null : setLang);
               }).toList(),
         ),
@@ -1070,11 +1072,11 @@ void showThemeSettings(OverlayDialogManager dialogManager) async {
     final isOptFixed = isOptionFixed(kCommConfKeyTheme);
     return CustomAlertDialog(
       content: Column(children: [
-        getRadio(Text(translate('Light')), ThemeMode.light, themeMode,
+        getRadio(Text(translate('Light'),style: TextStyle(fontFamily: 'Yekan')), ThemeMode.light, themeMode,
             isOptFixed ? null : setTheme),
-        getRadio(Text(translate('Dark')), ThemeMode.dark, themeMode,
+        getRadio(Text(translate('Dark'),style: TextStyle(fontFamily: 'Yekan')), ThemeMode.dark, themeMode,
             isOptFixed ? null : setTheme),
-        getRadio(Text(translate('Follow System')), ThemeMode.system, themeMode,
+        getRadio(Text(translate('Follow System'),style: TextStyle(fontFamily: 'Yekan')), ThemeMode.system, themeMode,
             isOptFixed ? null : setTheme)
       ]),
     );
@@ -1084,7 +1086,7 @@ void showThemeSettings(OverlayDialogManager dialogManager) async {
 void showAbout(OverlayDialogManager dialogManager) {
   dialogManager.show((setState, close, context) {
     return CustomAlertDialog(
-      title: Text(translate('About RustDesk')),
+      title: Text(translate('About RustDesk'),style: TextStyle(fontFamily: 'Yekan')),
       content: Wrap(direction: Axis.vertical, spacing: 12, children: [
         Text('Version: $version'),
         InkWell(
@@ -1149,7 +1151,7 @@ class __DisplayPageState extends State<_DisplayPage> {
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.arrow_back_ios)),
-        title: Text(translate('Display Settings')),
+        title: Text(translate('Display Settings'),style: TextStyle(fontFamily: 'Yekan')),
         centerTitle: true,
       ),
       body: SettingsList(sections: [
@@ -1211,7 +1213,7 @@ class __DisplayPageState extends State<_DisplayPage> {
           ],
         ),
         SettingsSection(
-          title: Text(translate('Other Default Options')),
+          title: Text(translate('Other Default Options'),style: TextStyle(fontFamily: 'Yekan')),
           tiles:
               otherDefaultSettings().map((e) => otherRow(e.$1, e.$2)).toList(),
         ),
@@ -1224,7 +1226,7 @@ class __DisplayPageState extends State<_DisplayPage> {
     final isOptFixed = isOptionFixed(key);
     return SettingsTile.switchTile(
       initialValue: value,
-      title: Text(translate(label)),
+      title: Text(translate(label),style: TextStyle(fontFamily: 'Yekan')),
       onToggle: isOptFixed
           ? null
           : (b) async {
@@ -1251,7 +1253,7 @@ class __ManageTrustedDevicesState extends State<_ManageTrustedDevices> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(translate('Manage trusted devices')),
+        title: Text(translate('Manage trusted devices'),style: TextStyle(fontFamily: 'Yekan')),
         centerTitle: true,
         actions: [
           Obx(() => IconButton(
@@ -1271,7 +1273,7 @@ class __ManageTrustedDevicesState extends State<_ManageTrustedDevices> {
               return Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return Center(child: Text('Error: ${snapshot.error}',style: TextStyle(fontFamily: 'Yekan')));
             }
             final devices = snapshot.data as List<TrustedDevice>;
             trustedDevices = devices.obs;
@@ -1329,7 +1331,7 @@ SettingsTile _getPopupDialogRadioEntry({
           content: Obx(
         () => Column(children: [
           ...list
-              .map((e) => getRadio(Text(translate(e.label)), e.value,
+              .map((e) => getRadio(Text(translate(e.label),style: TextStyle(fontFamily: 'Yekan')), e.value,
                   groupValue.value, onChanged))
               .toList(),
           Offstage(
@@ -1347,7 +1349,7 @@ SettingsTile _getPopupDialogRadioEntry({
     onPressed: asyncSetter == null ? null : (context) => showDialog(),
     value: Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
-      child: Obx(() => Text(translate(valueText.value))),
+      child: Obx(() => Text(translate(valueText.value),style: TextStyle(fontFamily: 'Yekan'))),
     ),
   );
 }
