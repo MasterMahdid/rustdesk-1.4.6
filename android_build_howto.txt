@@ -1,0 +1,58 @@
+To build:
+1- Build the armv7 naive library:
+docker build -f Dockerfile_armv7.android -t rustdesk-android-armv7 .
+2- bash into the image:
+docker run -it rustdesk-android-armv7:latest /bin/bash
+3- run these commands to copy librustdesk.so and libc++_shared.so to suitable place in project
+mkdir -p ./flutter/android/app/src/main/jniLibs/armeabi-v7a
+cp ./target/armv7-linux-androideabi/release/liblibrustdesk.so ./flutter/android/app/src/main/jniLibs/armeabi-v7a/librustdesk.so
+cp ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/arm-linux-androideabi/libc++_shared.so \
+   ./flutter/android/app/src/main/jniLibs/armeabi-v7a/
+4- without exiting the contaner, open new ssh session and copy librustdesk.so and libc++_shared.so from container to project
+docker cp 9257f03fb5ff:/workspace/flutter/android/app/src/main/jniLibs/armeabi-v7a .
+
+repeat these steps for thr arm64 docker. at the end the flutter/android/app/src/main/jniLibs has two folders armeabi-v7a and arm64-v8a both containing librustdesk.so and libc++_shared.so
+how build the Dockerfile.flutter and bash into it and run these
+
+export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH
+sed -i "s/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g" ./flutter/android/gradle.properties
+sed -i "s/signingConfigs.release/signingConfigs.debug/g" ./flutter/android/app/build.gradle
+
+
+
+#install sdk
+mkdir -p /opt/android-sdk/cmdline-tools
+
+cd /tmp
+curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+
+unzip sdk.zip
+mv cmdline-tools /opt/android-sdk/cmdline-tools/latest
+yes | /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
+  "platform-tools" \
+  "platforms;android-35" \
+  "build-tools;35.0.1" \
+  "ndk;25.2.9519653"
+
+export ANDROID_SDK_ROOT=/opt/android-sdk
+export ANDROID_HOME=/opt/android-sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+
+export ANDROID_SDK_ROOT=/opt/android-sdk
+export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+
+yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
+  "platform-tools" \
+  "platforms;android-35" \
+  "build-tools;35.0.1"
+
+  cd flutter
+  flutter build apk --release --target-platform android-arm --split-per-abi
+
+
+
+flutter pub get
+
+
+flutter build apk --release --target-platform android-arm64,android-arm --no-tree-shake-icons
