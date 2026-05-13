@@ -47,12 +47,17 @@ yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
   "platforms;android-35" \
   "build-tools;35.0.1"
 
-  cd flutter
-  flutter build apk --release --target-platform android-arm --split-per-abi
-
-
-
+cd flutter
 flutter pub get
 
 
 flutter build apk --release --target-platform android-arm64,android-arm --no-tree-shake-icons
+
+------------
+then extract the apk from running container
+docker cp 3c4cb7ff1a9b:/workspace/flutter/build/app/outputs/flutter-apk/app-release.apk .
+
+
+
+jarsigner -verify -verbose -certs /workspace/flutter/build/app/outputs/flutter-apk/app-release.apk
+
