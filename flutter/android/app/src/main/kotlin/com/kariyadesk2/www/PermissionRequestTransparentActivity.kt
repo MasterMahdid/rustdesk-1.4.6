@@ -1,4 +1,4 @@
-package com.kariyadesk.www
+package com.kariyadesk2.www
 
 import android.app.Activity
 import android.content.Intent

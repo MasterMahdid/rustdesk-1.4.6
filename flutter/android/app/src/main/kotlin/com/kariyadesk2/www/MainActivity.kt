@@ -1,4 +1,4 @@
-package com.kariyadesk.www
+package com.kariyadesk2.www
 
 /**
  * Handle events from flutter
