@@ -14,12 +14,6 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-def myket_keystoreProperties = new Properties()
-def myket_keystorePropertiesFile = rootProject.file('key_myket.properties')
-if (myket_keystorePropertiesFile.exists()) {
-    myket_keystoreProperties.load(new FileInputStream(myket_keystorePropertiesFile))
-}
-
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -111,51 +105,26 @@ android {
     }
 
     signingConfigs {
-      release_bazaar {
+      release {
         keyAlias keystoreProperties['keyAlias']
         keyPassword keystoreProperties['keyPassword']
         storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
         storePassword keystoreProperties['storePassword']
       }
-      release_myket {
-        keyAlias myket_keystoreProperties['keyAlias']
-        keyPassword myket_keystoreProperties['keyPassword']
-        storeFile myket_keystoreProperties['storeFile'] ? file(myket_keystoreProperties['storeFile']) : null
-        storePassword myket_keystoreProperties['storePassword']
-      }
-
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release_bazaar
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules'
         }
     }
-    flavorDimensions "market"
-    productFlavors {
-        bazaar {
-            dimension "market"
-            signingConfig signingConfigs.release_bazaar
-        }
-        myket {
-            dimension "market"
-            signingConfig signingConfigs.release_myket
-        }
-    }
-    
 }
 
 flutter {
     source '../..'
-}
-android.applicationVariants.all { variant ->
-    variant.outputs.all { output ->
-        def newName = "${variant.flavorName}-${variant.versionName}.apk"
-        outputFileName = newName
-    }
 }
 
 dependencies {
